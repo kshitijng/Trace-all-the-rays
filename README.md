@@ -2,10 +2,10 @@
 
 This is a simple implementation of a ray tracer in C++. 
 
-ppmtest.cpp file sets up a file to test the ppm format which is used to store the scene for this project.
-main.cpp sets up the scence, and colours it. 
-ray.h implements the ray class and methods.
-vec.h implements the vector class and methods. 
+ppmtest.cpp file sets up a file to test the ppm format which is used to store the scene for this project.\n
+main.cpp sets up the scence, and colours it.\n
+ray.h implements the ray class and methods.\n
+vec.h implements the vector class and methods.\n 
 
 Notes:
 • Used floats instead of doubles. (either can be used)
