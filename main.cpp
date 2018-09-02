@@ -6,8 +6,8 @@
 vec colour(ray r);
 
 int main() {
-    int rows = 900;
-    int columns = 1440;
+    int rows = 1440;
+    int columns = 900;
     vec lowerLeftCorner(-2.0, -1.0, -1.0);
     vec horizontal(4.0, 0.0, 0.0);
     vec vertical(0.0, 2.0, 0.0);
@@ -39,7 +39,21 @@ int main() {
     // }
 }
 
+bool interacts_with_the_sphere(float sphereRadius, const vec& sphereCenter, const ray& incidentRay) {
+    const vec fromSphereCenterToRayOrigin = incidentRay.origin() - sphereCenter;
+    float a = dot_product(incidentRay.direction(), incidentRay.direction());
+    float b = 2 * dot_product(incidentRay.direction(), fromSphereCenterToRayOrigin);
+    float c = dot_product(fromSphereCenterToRayOrigin, fromSphereCenterToRayOrigin) - (sphereRadius * sphereRadius);
+    // std::cout << a <<  " " << b << " " << c << "\n";
+    float dis = ((b*b) - (4 * a * c));
+    // std::cout << (dis > 0);
+    return dis > 0;
+}
+
 vec colour(ray r) {
+    if (interacts_with_the_sphere(0.5, vec(0, 0, -1), r)) {
+        return vec(0.8, 0.6, 0);
+    }
     vec unit_direction = get_unit_vector(r.direction());
     // std::cout << unit_direction.y() << "\n";
     // 0 < t < 1

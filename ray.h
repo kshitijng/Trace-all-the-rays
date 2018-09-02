@@ -10,8 +10,11 @@ public:
     vec B;
     ray() {}
     ray(const vec& a, const vec&b) {A = a; B = b;}
-    vec origin() {return A; }
-    vec direction() {return B;}
+    const vec origin() const {
+        const vec newVec = vec(A);
+        return newVec;
+    }
+    vec direction() const{return B;}
     vec get_ray_at_point(float t) {return A + t*B;} 
 };
 
