@@ -2,6 +2,15 @@
 
 This is a simple implementation of a ray tracer in C++.<br />
 
+To compile:<br />
+g++ main.cpp -o name_of_executable<br />
+
+To run:<br />
+./executable > output<br />
+
+and then view the output using preview on macOS or toyviewer.<br />
+
+Info about the different files:<br />
 ppmtest.cpp file sets up a file to test the ppm format which is used to store the scene for this project.<br />
 main.cpp sets up the scence, and colours it.<br />
 ray.h implements the ray class and methods.<br />
