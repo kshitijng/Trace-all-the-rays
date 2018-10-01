@@ -16,6 +16,7 @@ public:
     }
     vec direction() const{return B;}
     vec get_ray_at_point(float t) {return A + t*B;} 
+    vec get_ray_at_point(float t) const {return A + t*B;}
 };
 
 #endif
