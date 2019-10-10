@@ -1,5 +1,5 @@
-// The vector header file dealing with the vector definitions and 
-// the vector functions.
+// defines a vector.
+// we use a vector to store information about the scene.
 
 #ifndef VECH
 #define VECH

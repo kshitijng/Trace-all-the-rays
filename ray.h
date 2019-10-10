@@ -1,4 +1,5 @@
-// The ray representation class. 
+// defines a (light) ray.
+
 #ifndef RAYH
 #define RAYH
 

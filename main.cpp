@@ -1,4 +1,3 @@
-// This is the main output file
 #include <iostream>
 #include <stdlib.h>
 #include "vec.h"
@@ -12,8 +11,10 @@ vec colour(ray r, hittable_object *scene);
 
 int main() {
     // Set up the size of the scene.
+    // Lower sizes = faster runtime.
     int rows = 300;
     int columns = 300;
+
     // For Anti-Aliasing, number of rays to sample per pixel.
     int numberOfSamplePerPixel = 10;
 
@@ -23,7 +24,7 @@ int main() {
 
     // Objects defined
     list[0] = new sphere(vec(0, 0, -1), 0.5);
-    // list[1] = new sphere(vec(0, -100.5, -1), 100.0);
+    // TODO: Fix multiple object scene.
 
     // Store the Objects
     hittable_object *scene = new object_list(list, list_size);
@@ -51,21 +52,8 @@ int main() {
     }
 }
 
-// Returns true if the incident ray hits the sphere.
-// Obsolete
-// bool interacts_with_the_sphere(float sphereRadius, const vec& sphereCenter, const ray& incidentRay) {
-//     const vec fromSphereCenterToRayOrigin = incidentRay.origin() - sphereCenter;
-//     float a = dot_product(incidentRay.direction(), incidentRay.direction());
-//     float b = 2 * dot_product(incidentRay.direction(), fromSphereCenterToRayOrigin);
-//     float c = dot_product(fromSphereCenterToRayOrigin, fromSphereCenterToRayOrigin) - (sphereRadius * sphereRadius);
-//     // std::cout << a <<  " " << b << " " << c << "\n";
-//     float dis = ((b*b) - (4 * a * c));
-//     // std::cout << (dis > 0);
-//     return dis > 0;
-// }
-
 // Returns the visible point where the ray hits the sphere, and -1.0 if it does not. 
-// Obsolete
+// Deprecated
 float interacts_with_the_sphere(float sphereRadius, const vec& sphereCenter, const ray& incidentRay) {
     const vec fromSphereCenterToRayOrigin = incidentRay.origin() - sphereCenter;
     float a = dot_product(incidentRay.direction(), incidentRay.direction());
@@ -81,7 +69,7 @@ float interacts_with_the_sphere(float sphereRadius, const vec& sphereCenter, con
 }
 
 // Returns a vec of colours for an incident ray.
-// Obsolete
+// Deprecated
 vec colour(ray r) {
     /* Code without calculating normal ray
     if (interacts_with_the_sphere(0.5, vec(0, 0, -1), r)) {
@@ -100,24 +88,18 @@ vec colour(ray r) {
     return (1.0-t)*vec(0.4, 0.6, 0.3) + t*vec(0.5, 0.7, 1.0);
 }
 
-vec diffuse() {
-    vec p;
-    do {
-        p = 2.0 * vec(drand48(), drand48(), drand48()) - vec(1, 1, 1);
-    } while (p.length_squared() >= 1.0);
-    return p;
-}
 // Returns a vec of colours for an incident ray in a scence.
 // Currently in Matte
 vec colour(ray r, hittable_object *scene) {
     hit_record rec;
+    vec unit_direction = get_unit_vector(r.direction());
+    float t = 0.5 *(unit_direction.y() + 1.0);
+
     if (scene->hit(r, rec)) {
         /*vec target = rec.p + rec.normal + diffuse();
         return 0.5*colour( ray(rec.p, target - rec.p), scene);*/
         vec normal = get_unit_vector(r.get_ray_at_point(t) - vec(0, 0, -1));
         return 0.5*vec(normal.x() + 1, normal.y() + 1, normal.z() + 1);
     }
-    vec unit_direction = get_unit_vector(r.direction());
-    float t = 0.5 *(unit_direction.y() + 1.0);
     return (1.0-t)*vec(0.4, 0.6, 0.3) + t*vec(0.5, 0.7, 1.0);
 }
